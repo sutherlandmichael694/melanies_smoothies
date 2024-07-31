@@ -2,8 +2,6 @@
 import streamlit as st
 from snowflake.snowpark.functions import col
 
-cnx = st.connection("snowflake")
-session = cnx.session()
 
 # Write directly to the app
 st.title("Customise your Smoothies :cup_with_straw:")
@@ -17,10 +15,10 @@ name_on_order = st.text_input("Name on Smoothie:")
 st.write("The name on your Smoothie will be:", name_on_order)
 
 
+cnx = st.connection("snowflake")
+session = cnx.session()
 
-session = get_active_session()
 my_dataframe = session.table("smoothies.public.fruit_options").select(col('fruit_name'))
-# st.dataframe(data=my_dataframe, use_container_width=True)
 
 # create ingredients list from table column as a multiselect
 
@@ -33,20 +31,6 @@ if ingredients_list:
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
 
-#using st.write to list the ingredients string from  above
-
-#st.write(ingredients_string)
-
-#Build a SQL Insert Statement & Test It would work in a SQL worksheet to add the ingredients into the ORDERS table
-
-my_insert_stmt = """ insert into smoothies.public.orders(ingredients, name_on_order)
-            values ('""" + ingredients_string + """','""" + name_on_order +  """')"""
-
-#st.write(my_insert_stmt)
-#st.write('Your Smoothie is ordered,', name_on_order)
-
-#  stops code when written
-# st.stop ()
 
 
 #create button to create a variable called time to insert
