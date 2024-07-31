@@ -27,10 +27,9 @@ ingredients_list = st.multiselect( "Choose up to five ingredients", my_dataframe
     
 #FOR loop to check for selected fruits, place them into the ingredients_string variable
 
-
+ingredients_string = ''
 if ingredients_list:
-    ingredients_string = ''
-    
+        
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
 
